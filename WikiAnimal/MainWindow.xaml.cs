@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WikiAnimal.Domain;
+using WikiAnimal.Domain.Repository;
 
 namespace WikiAnimal
 {
@@ -20,9 +22,20 @@ namespace WikiAnimal
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        TypeOfAnimalRepository typeOfAnimalRepository;
+        public MainWindow() { InitializeComponent(); }
+        public MainWindow(TypeOfAnimalRepository _typeOfAnimalRepository)
         {
             InitializeComponent();
+
+            typeOfAnimalRepository = _typeOfAnimalRepository;
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var list = await typeOfAnimalRepository.GetAllAsync();
+
+            var l = await typeOfAnimalRepository.FindByConditionAsync(x=>x.Id == 1);
         }
     }
 }

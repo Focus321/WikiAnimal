@@ -9,7 +9,7 @@ namespace WikiAnimal.Domain.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public string PhotoPath { get; set; }
-        public virtual List<Animal> Animals { get; set; }
+        public IEnumerable<Animal> Animals { get; set; }
 
         public TypeOfAnimal()
         {

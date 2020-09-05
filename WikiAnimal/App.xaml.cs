@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using WikiAnimal.Domain;
-using WikiAnimal.Repository;
+using WikiAnimal.Domain.Repository;
 
 namespace WikiAnimal
 {

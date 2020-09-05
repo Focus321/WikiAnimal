@@ -13,5 +13,6 @@ namespace WikiAnimal.Domain
         public string ImagePath { get; set; }
         public TypeOfAnimal TypeOfAnimal { get; set; }
         public int TypeOfAnimalId { get; set; }
+
     }
 }
