@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WikiAnimal.Domain.Model
+{
+    public class TypeOfAnimal
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string PhotoPath { get; set; }
+        public virtual List<Animal> Animals { get; set; }
+
+        public TypeOfAnimal()
+        {
+            Animals = new List<Animal>();
+        }
+    }
+}
