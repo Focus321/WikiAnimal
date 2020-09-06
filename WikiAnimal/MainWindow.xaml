@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WikiAnimal"
         mc:Ignorable="d"
-       Title="MainWindow" Height="800" Width="1500" MinWidth="740" MinHeight="330" Loaded="Window_Loaded">
+       Title="MainWindow" Height="900" Width="1500" MinWidth="740" MinHeight="330" Loaded="Window_Loaded">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <WrapPanel Name="mainWrapPanel" Orientation="Horizontal" Margin="15,15,15,15"></WrapPanel>
