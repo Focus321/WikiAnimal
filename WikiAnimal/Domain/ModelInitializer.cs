@@ -26,8 +26,10 @@ namespace WikiAnimal.Domain
 
 
             // Добавление Конкретных Animals
-          
-            
+            #region
+
+            // Собаки
+            #region
             context.Animals.Add(new Animal // 1
             {
                 TypeOfAnimalId = context.TypeOfAnimals.First(x => x.Name == "Собаки").Id, 
@@ -93,8 +95,10 @@ namespace WikiAnimal.Domain
                 Habitat = "Зародилась порода в Уэльсе, где она стала одной из первых пастушьих собак. Вельш-корги получили распространение в XХ веке.",
                 ImagePath = @"https://petsi.net/images/dogbreed/velsh-korgi-kardigan.jpg",
             });
+            #endregion
 
-
+            // Совы
+            #region
             context.Animals.Add(new Animal // 1
             {
                 TypeOfAnimalId = context.TypeOfAnimals.First(x => x.Name == "Совы").Id,
@@ -160,8 +164,10 @@ namespace WikiAnimal.Domain
                 Habitat = "Территория обитания болотной совы простирается практически на всех континентах Земли, за исключением Австралии и Антарктики. В качестве среды обитания предпочитает болота с солоноватой водой, равнинные местности, хвойные леса, поля и степи. Некоторые представители встречаются в горах, на сельскохозяйственных угодьях и в парках. Живет преимущественно в открытых пространствах.",
                 ImagePath = @"https://ecoportal.info/wp-content/uploads/2018/03/bolotnaya-sova-544x408.jpg",
             });
+            #endregion
 
-
+            // Кошки
+            #region
             context.Animals.Add(new Animal
             {
                 TypeOfAnimalId = context.TypeOfAnimals.First(x => x.Name == "Кошки").Id,
@@ -227,7 +233,10 @@ namespace WikiAnimal.Domain
                 Habitat = "Исторически ареал пумы был самым обширным среди всех наземных млекопитающих Америки. Даже сейчас по широте распространения пума сравнима (из кошачьих) только с обыкновенной рысью, рыжей рысью, лесной кошкой и леопардом. Первоначально пумы встречались почти повсеместно от юга Патагонии до юго-востока Аляски; область её распространения достаточно точно совпадала с ареалом её главной добычи — различных оленей. Сейчас на территории США и Канады пума сохранилась преимущественно в гористых западных районах. На востоке Северной Америки пума была полностью истреблена; исключение составляет крохотная популяция подвида Puma concolor coryi во Флориде.",
                 ImagePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Puma_face.jpg/1024px-Puma_face.jpg",
             });
+            #endregion
 
+            // Лисы
+            #region
             context.Animals.Add(new Animal
             {
                 TypeOfAnimalId = context.TypeOfAnimals.First(x => x.Name == "Лисы").Id,
@@ -293,7 +302,9 @@ namespace WikiAnimal.Domain
                 Habitat = "Песчаная лисица встречается в пустыне Сахара, от Марокко и Туниса до Египта и Сомали. Типичная среда обитания — песчаные и каменистые пустыни.",
                 ImagePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/R%C3%BCppell%27s_fox.jpg/1024px-R%C3%BCppell%27s_fox.jpg",
             });
+            #endregion
 
+            // Мадагаскарские виверры
             #region
             context.Animals.Add(new Animal
             {
@@ -361,6 +372,8 @@ namespace WikiAnimal.Domain
                 ImagePath = "http://www.namadagaskare.ru/img/news/13864627830d221de4aa1f7553e2b43a9ed5698cf1.jpg",
             });
             #endregion
+
+            //Суслики
             #region
             context.Animals.Add(new Animal
             {
@@ -429,7 +442,7 @@ namespace WikiAnimal.Domain
             });
             #endregion
 
-            // Шаблон
+            // Шаблон добавления Animal
             //context.Animals.Add(new Animal
             //{
             //    TypeOfAnimalId = context.TypeOfAnimals.First(x => x.Name == "").Id,
@@ -440,6 +453,10 @@ namespace WikiAnimal.Domain
             //    Habitat = "",
             //    ImagePath = "",
             //});
+
+            #endregion
+
+
             context.SaveChanges();
         }
     }
