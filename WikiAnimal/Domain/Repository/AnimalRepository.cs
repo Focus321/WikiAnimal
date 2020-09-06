@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,12 @@ namespace WikiAnimal.Domain.Repository
 
         public async Task<IReadOnlyCollection<Animal>> FindByConditionAsync(Expression<Func<Animal, bool>> predicat)
         {
-            return await Context.Animals.Include(x => x.TypeOfAnimal).ToListAsync();
+            return await Context.Animals.Include(x => x.TypeOfAnimal).Where(predicat).ToListAsync();
         }
 
-        public Task<IReadOnlyCollection<Animal>> GetAllAsync()
+        public async Task<IReadOnlyCollection<Animal>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Context.Animals.Include(x => x.TypeOfAnimal).ToListAsync();
         }
     }
 }

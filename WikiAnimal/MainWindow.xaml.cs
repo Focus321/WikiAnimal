@@ -14,28 +14,27 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WikiAnimal.Domain;
 using WikiAnimal.Domain.Repository;
+using WikiAnimal.Services;
 
 namespace WikiAnimal
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        TypeOfAnimalRepository typeOfAnimalRepository;
+        private AnimalWikiServices _animalServices;
+
         public MainWindow() { InitializeComponent(); }
-        public MainWindow(TypeOfAnimalRepository _typeOfAnimalRepository)
+        public MainWindow(AnimalWikiServices animalServices)
         {
             InitializeComponent();
-
-            typeOfAnimalRepository = _typeOfAnimalRepository;
+            _animalServices = animalServices;
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e) { await _animalServices.GetPage(mainWrapPanel, 0); }
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var list = await typeOfAnimalRepository.GetAllAsync();
-
-            var l = await typeOfAnimalRepository.FindByConditionAsync(x=>x.Id == 1);
+            if (_animalServices.PageNumber == 1) return;
+            _animalServices.PageNumber--;
+            await _animalServices.GetPage(mainWrapPanel, 0);
         }
     }
 }
