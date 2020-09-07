@@ -12,17 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WikiAnimal.Domain;
+using WikiAnimal.Domain.Repository;
+using WikiAnimal.Services;
 
 namespace WikiAnimal
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private AnimalWikiServices _animalServices;
+
+        public MainWindow() { InitializeComponent(); }
+        public MainWindow(AnimalWikiServices animalServices)
         {
             InitializeComponent();
+            _animalServices = animalServices;
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e) { await _animalServices.GetPage(mainWrapPanel, 0); }
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (_animalServices.PageNumber == 1) return;
+            _animalServices.PageNumber--;
+            await _animalServices.GetPage(mainWrapPanel, 0);
         }
     }
 }
