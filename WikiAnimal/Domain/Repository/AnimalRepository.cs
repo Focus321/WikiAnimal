@@ -13,21 +13,17 @@ namespace WikiAnimal.Domain.Repository
 {
     public class AnimalRepository : IRepository<Animal>
     {
-        public AnimalRepository(AnimalDatabaseContext context)
-        {
-            Context = context;
-        }
-
         private AnimalDatabaseContext Context { get; }
+        public AnimalRepository(AnimalDatabaseContext context) { Context = context; }
 
         public async Task Add(Animal obj)
         {
             await Context.Animals.AddAsync(obj);
+            await Context.SaveChangesAsync();
         }
-
         public async Task Change(Animal obj)
         {
-            var animal = (await Context.Animals.FirstOrDefaultAsync(x=>x.Id == obj.Id));
+            var animal = (await Context.Animals.FirstOrDefaultAsync(x => x.Id == obj.Id));
             if (animal != null)
             {
                 animal.Name = animal.Name;
@@ -36,6 +32,8 @@ namespace WikiAnimal.Domain.Repository
                 animal.ShortDescription = animal.ShortDescription;
                 animal.Description = animal.Description;
                 animal.Appearance = animal.Appearance;
+
+                await Context.SaveChangesAsync();
             }
         }
 
@@ -43,7 +41,6 @@ namespace WikiAnimal.Domain.Repository
         {
             return await Context.Animals.Include(x => x.TypeOfAnimal).Where(predicat).ToListAsync();
         }
-
         public async Task<IReadOnlyCollection<Animal>> GetAllAsync()
         {
             return await Context.Animals.Include(x => x.TypeOfAnimal).ToListAsync();
