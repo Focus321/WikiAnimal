@@ -21,7 +21,5 @@ namespace WikiAnimal.Domain
             // использование Fluent API
             base.OnModelCreating(modelBuilder);
         }
-
-
     }
 }
