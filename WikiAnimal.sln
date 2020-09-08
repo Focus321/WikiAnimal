@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiAnimal", "WikiAnimal\WikiAnimal.csproj", "{BFCD23DB-A12D-4AC4-B92A-6DD72D384449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiAnimal", "WikiAnimal\WikiAnimal.csproj", "{BFCD23DB-A12D-4AC4-B92A-6DD72D384449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{B0CA480B-2AF3-4E0F-8D98-69A03CE8EDE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BFCD23DB-A12D-4AC4-B92A-6DD72D384449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFCD23DB-A12D-4AC4-B92A-6DD72D384449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFCD23DB-A12D-4AC4-B92A-6DD72D384449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0CA480B-2AF3-4E0F-8D98-69A03CE8EDE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0CA480B-2AF3-4E0F-8D98-69A03CE8EDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0CA480B-2AF3-4E0F-8D98-69A03CE8EDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0CA480B-2AF3-4E0F-8D98-69A03CE8EDE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
