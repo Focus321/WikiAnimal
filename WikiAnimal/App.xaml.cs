@@ -35,6 +35,7 @@ namespace WikiAnimal
             services.AddDbContext<AnimalDatabaseContext>(option => option.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AnimalDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             services.AddTransient(typeof(AnimalDatabaseContext));
             services.AddTransient(typeof(AnimalWikiServices));
+            services.AddTransient(typeof(ChatService));
         }
     }
 }
