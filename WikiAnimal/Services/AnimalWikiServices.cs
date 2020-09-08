@@ -368,7 +368,8 @@ namespace WikiAnimal.Services
         }
         #endregion
         #endregion
-
+        //SecondPage
+        #region
         private async Task GetSecondPage(WrapPanel wrapPanel)
         {
             wrapPanel.Children.Clear();
@@ -428,7 +429,9 @@ namespace WikiAnimal.Services
                 }
             }
         }
+        #endregion
 
+        #region
         private async Task GetThirdPage(WrapPanel wrapPanel, int number)
         {
             wrapPanel.Children.Clear();
@@ -437,6 +440,7 @@ namespace WikiAnimal.Services
             {
                 wrapPanel.Children.Add(new Border()
                 {
+                    Tag = number,
                     CornerRadius = new System.Windows.CornerRadius(5),
                     BorderThickness = new Thickness(2),
                     Margin = new Thickness(15),
@@ -482,8 +486,9 @@ namespace WikiAnimal.Services
                             grid.Children.Add(image);
                         }
 
-                        TextBlock textBlock1 = new TextBlock()
+                        TextBox textBlock1 = new TextBox()
                         {
+                            Tag = "1",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 40,
                             HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -491,18 +496,25 @@ namespace WikiAnimal.Services
                             FontWeight = FontWeights.Bold,
                             FontFamily = new FontFamily("Segoe Print"),
                             TextAlignment = TextAlignment.Center,
-                            Text = res.Where(x => x.Id == number).First().Name
+                            Text = res.Where(x => x.Id == number).First().Name,
+                            IsReadOnly = true,
+                            Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                            BorderBrush = Brushes.Transparent
                         };
                         Grid.SetColumn(textBlock1, 1);
                         grid.Children.Add(textBlock1);
 
-                        TextBlock textBlock2 = new TextBlock()
+                        TextBox textBlock2 = new TextBox()
                         {
+                            Tag = "2",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 16,
                             FontWeight = FontWeights.Bold,
                             FontFamily = new FontFamily("Segoe Print"),
-                            Text = res.Where(x => x.Id == number).First().ShortDescription
+                            Text = res.Where(x => x.Id == number).First().ShortDescription,
+                            IsReadOnly = true,
+                            Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                            BorderBrush = Brushes.Transparent
                         };
                         Grid.SetColumn(textBlock2, 1);
                         Grid.SetRow(textBlock2, 1);
@@ -524,13 +536,17 @@ namespace WikiAnimal.Services
                         Grid.SetColumnSpan(textBlock3, 2);
                         grid.Children.Add(textBlock3);
 
-                        TextBlock textBlock4 = new TextBlock()
+                        TextBox textBlock4 = new TextBox()
                         {
+                            Tag = "3",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 16,
                             FontWeight = FontWeights.Bold,
                             FontFamily = new FontFamily("Segoe Print"),
-                            Text = res.Where(x => x.Id == number).First().Description
+                            Text = res.Where(x => x.Id == number).First().Description,
+                            IsReadOnly = true,
+                            Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                            BorderBrush = Brushes.Transparent
                         };
                         Grid.SetColumn(textBlock4, 0);
                         Grid.SetRow(textBlock4, 3);
@@ -553,13 +569,17 @@ namespace WikiAnimal.Services
                         Grid.SetColumnSpan(textBlock5, 2);
                         grid.Children.Add(textBlock5);
 
-                        TextBlock textBlock6 = new TextBlock()
+                        TextBox textBlock6 = new TextBox()
                         {
+                            Tag = "4",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 16,
                             FontWeight = FontWeights.Bold,
                             FontFamily = new FontFamily("Segoe Print"),
-                            Text = res.Where(x => x.Id == number).First().Appearance
+                            Text = res.Where(x => x.Id == number).First().Appearance,
+                            IsReadOnly = true,
+                            Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                            BorderBrush = Brushes.Transparent
                         };
                         Grid.SetColumn(textBlock6, 0);
                         Grid.SetRow(textBlock6, 5);
@@ -582,23 +602,125 @@ namespace WikiAnimal.Services
                         Grid.SetColumnSpan(textBlock7, 2);
                         grid.Children.Add(textBlock7);
 
-                        TextBlock textBlock8 = new TextBlock()
+                        TextBox textBlock8 = new TextBox()
                         {
+                            Tag = "5",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 16,
                             FontWeight = FontWeights.Bold,
                             FontFamily = new FontFamily("Segoe Print"),
-                            Text = res.Where(x => x.Id == number).First().Habitat
+                            Text = res.Where(x => x.Id == number).First().Habitat,
+                            IsReadOnly = true,
+                            Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                            BorderBrush = Brushes.Transparent
                         };
                         Grid.SetColumn(textBlock8, 0);
                         Grid.SetRow(textBlock8, 7);
                         Grid.SetColumnSpan(textBlock8, 2);
                         grid.Children.Add(textBlock8);
 
+                        Button butt = new Button();
+                        butt.Tag = border.Tag;
+                        butt.HorizontalAlignment = HorizontalAlignment.Right;
+                        butt.VerticalAlignment = VerticalAlignment.Top;
+                        butt.Background = Brushes.Transparent;
+                        butt.BorderBrush = Brushes.Transparent;
+                        butt.Margin = new Thickness(-5);
+                        butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/126/126794.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                        butt.Click += ButtonClickChangeAnimal;
+                        Grid.SetColumn(butt, 1);
+                        grid.Children.Add(butt);
+
                     }
                 }
             }
         }
+
+        private void ButtonClickChangeAnimal(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Parent is Grid grid1)
+            {
+                PageNumber++;
+
+                foreach (var item in grid1.Children)
+                {
+                    if (item is TextBox textBox)
+                    {
+                        textBox.IsReadOnly = false;
+                        textBox.Background = Brushes.White;// (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                    }
+                    if (item is Button butt)
+                    {
+                        butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Add_document_icon_%28the_Noun_Project_27896%29_blue.svg/1200px-Add_document_icon_%28the_Noun_Project_27896%29_blue.svg.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                        butt.Click -= ButtonClickChangeAnimal;
+                        butt.Click += SaveChangeAnimal;
+                    }
+                }
+            }
+        }
+
+        private async void SaveChangeAnimal(object sender, RoutedEventArgs e)
+        {
+            var Name = "";
+            var ShortDescription = "";
+            var Description = "";
+            var Appearance = "";
+            var Habitat = "";
+            //  var ImagePath = "";
+            int TypeOfAnimalId = _typeNumber;
+            if (sender is Button button)
+            {
+                if (button.Parent is Grid grid)
+                {
+                    foreach (var item in grid.Children)
+                    {
+                        if (item is TextBox text)
+                        {
+                            if (text.Tag.ToString() == "1") Name = text.Text;
+                            if (text.Tag.ToString() == "2") ShortDescription = text.Text;
+                            if (text.Tag.ToString() == "3") Description = text.Text;
+                            if (text.Tag.ToString() == "4") Appearance = text.Text;
+                            if (text.Tag.ToString() == "5") Habitat = text.Text;
+                            // if (text.Tag.ToString() == "6") ImagePath = text.Text;
+                        }
+                    }
+                    if (Name != "" && ShortDescription != "" && Description != "" && Appearance != "" && Habitat != "" /*&& ImagePath != ""*/)
+                    {
+                        foreach (var item in grid.Children)
+                        {
+                            if (item is TextBox textBox)
+                            {
+                                textBox.IsReadOnly = false;
+                                textBox.Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA");
+                            }
+
+                            if (item is Button butt)
+                            {
+                                butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/126/126794.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                                butt.Click -= SaveChangeAnimal;
+                                butt.Click += ButtonClickChangeAnimal;
+                            }
+                        }
+
+                        PageNumber = 2;
+                        await _repositoryAnimal.Change(new Domain.Animal()
+                        {
+                            Id = Convert.ToInt32((grid.Parent as Border).Tag),
+                            Name = Name,
+                            ShortDescription = ShortDescription,
+                            Description = Description,
+                            Appearance = Appearance,
+                            Habitat = Habitat
+
+                            // ImagePath = ImagePath,
+                            //TypeOfAnimalId = TypeOfAnimalId
+                        });
+                        await GetPage((grid.Parent as Border).Parent as WrapPanel, 0);
+                    }
+                }
+            }
+        }
+        #endregion
 
         private async void MouseDownBorder(object sender, MouseButtonEventArgs e)
         {

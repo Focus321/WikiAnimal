@@ -26,12 +26,12 @@ namespace WikiAnimal.Domain.Repository
             var animal = (await Context.Animals.FirstOrDefaultAsync(x => x.Id == obj.Id));
             if (animal != null)
             {
-                animal.Name = animal.Name;
-                animal.Habitat = animal.Habitat;
-                animal.ImagePath = animal.ImagePath;
-                animal.ShortDescription = animal.ShortDescription;
-                animal.Description = animal.Description;
-                animal.Appearance = animal.Appearance;
+                animal.Name = obj.Name;
+                animal.Habitat = obj.Habitat;
+               // animal.ImagePath = animal.ImagePath;
+                animal.ShortDescription = obj.ShortDescription;
+                animal.Description = obj.Description;
+                animal.Appearance = obj.Appearance;
 
                 await Context.SaveChangesAsync();
             }

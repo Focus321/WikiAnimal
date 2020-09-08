@@ -31,11 +31,11 @@ namespace WikiAnimal
 
         private async void Window_Loaded(object sender, RoutedEventArgs e) { await _animalServices.GetPage(mainWrapPanel, 0); }
         private async void Button_Click(object sender, RoutedEventArgs e)
-        {          
+        {
             if (_animalServices.PageNumber == 1) return;
-            _animalServices.PageNumber--;
+            else if (_animalServices.PageNumber == 4) _animalServices.PageNumber = 2;
+            else _animalServices.PageNumber--;
             await _animalServices.GetPage(mainWrapPanel, 0);
         }
-
     }
 }
