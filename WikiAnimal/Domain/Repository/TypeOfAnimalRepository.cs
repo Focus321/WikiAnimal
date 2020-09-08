@@ -27,8 +27,8 @@ namespace WikiAnimal.Domain.Repository
             var typeAnimal = (await Context.TypeOfAnimals.FirstOrDefaultAsync(x => x.Id == obj.Id));
             if (typeAnimal != null)
             {
-                typeAnimal.Name = typeAnimal.Name;
-                typeAnimal.PhotoPath = typeAnimal.PhotoPath;
+                typeAnimal.Name = obj.Name;
+                typeAnimal.PhotoPath = obj.PhotoPath;
                 await Context.SaveChangesAsync();
             }
         }
