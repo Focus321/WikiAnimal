@@ -12,6 +12,7 @@ namespace WikiAnimal.Domain
         public string Habitat { get; set; } // Ареал(среда обитание)
         public string ImagePath { get; set; }
         public TypeOfAnimal TypeOfAnimal { get; set; }
+        public bool IsRemove { get; set; } = false;
         public int TypeOfAnimalId { get; set; }
 
     }

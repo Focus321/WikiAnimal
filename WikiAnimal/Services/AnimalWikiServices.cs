@@ -429,6 +429,8 @@ namespace WikiAnimal.Services
             }
         }
 
+
+        #region
         private async Task GetThirdPage(WrapPanel wrapPanel, int number)
         {
             wrapPanel.Children.Clear();
@@ -437,6 +439,7 @@ namespace WikiAnimal.Services
             {
                 wrapPanel.Children.Add(new Border()
                 {
+                    Tag = number,
                     CornerRadius = new System.Windows.CornerRadius(5),
                     BorderThickness = new Thickness(2),
                     Margin = new Thickness(15),
@@ -594,15 +597,134 @@ namespace WikiAnimal.Services
                         Grid.SetRow(textBlock8, 7);
                         Grid.SetColumnSpan(textBlock8, 2);
                         grid.Children.Add(textBlock8);
+                        Button butt = new Button();
+                        butt.Tag = border.Tag;
+                        butt.HorizontalAlignment = HorizontalAlignment.Right;
+                        butt.VerticalAlignment = VerticalAlignment.Top;
+                        butt.Background = Brushes.Transparent;
+                        butt.BorderBrush = Brushes.Transparent;
+                        butt.Margin = new Thickness(-5);
+                        butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/126/126794.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                        butt.Click += ButtonClickChangeAnimal;
+                        Grid.SetColumn(butt, 1);
+                        grid.Children.Add(butt);
 
+                        Button button = new Button()
+                        {
+                            Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/61/61848.png")), MaxHeight = 50, Stretch = Stretch.Uniform }
+                        };
+                        button.Click += RemoveButtonClick;
+                        button.Tag = border.Tag;
+                        //button.Width = 100;
+                        //button.Height = 30;
+                        button.Background = Brushes.Transparent;
+                        button.BorderBrush = Brushes.Transparent;
+                        button.HorizontalAlignment = HorizontalAlignment.Right;
+                        button.VerticalAlignment = VerticalAlignment.Top;
+                        button.Margin = new Thickness(-5, -5, 70, -5);
+                        Grid.SetColumn(button, 1);
+                        grid.Children.Add(button);
                     }
                 }
             }
         }
 
+        private async void RemoveButtonClick(object sender, RoutedEventArgs e)
+        {
+            await _repositoryAnimal.Remove((await _repositoryAnimal.GetAllAsync()).First(x => x.Id == Convert.ToInt32((sender as Button).Tag.ToString())));
+
+            PageNumber--;
+            await GetPage((((sender as Button).Parent as Grid).Parent as Border).Parent as WrapPanel, 0);
+        }
+
+        private void ButtonClickChangeAnimal(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Parent is Grid grid1)
+            {
+                PageNumber++;
+
+                foreach (var item in grid1.Children)
+                {
+                    if (item is TextBox textBox)
+                    {
+                        textBox.IsReadOnly = false;
+                        textBox.Background = Brushes.White;// (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA"),
+                    }
+                    if (item is Button butt)
+                    {
+                        butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Add_document_icon_%28the_Noun_Project_27896%29_blue.svg/1200px-Add_document_icon_%28the_Noun_Project_27896%29_blue.svg.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                        butt.Click -= ButtonClickChangeAnimal;
+                        butt.Click += SaveChangeAnimal;
+                    }
+                }
+            }
+        }
+
+        private async void SaveChangeAnimal(object sender, RoutedEventArgs e)
+        {
+            var Name = "";
+            var ShortDescription = "";
+            var Description = "";
+            var Appearance = "";
+            var Habitat = "";
+            //  var ImagePath = "";
+            int TypeOfAnimalId = _typeNumber;
+            if (sender is Button button)
+            {
+                if (button.Parent is Grid grid)
+                {
+                    foreach (var item in grid.Children)
+                    {
+                        if (item is TextBox text)
+                        {
+                            if (text.Tag.ToString() == "1") Name = text.Text;
+                            if (text.Tag.ToString() == "2") ShortDescription = text.Text;
+                            if (text.Tag.ToString() == "3") Description = text.Text;
+                            if (text.Tag.ToString() == "4") Appearance = text.Text;
+                            if (text.Tag.ToString() == "5") Habitat = text.Text;
+                            // if (text.Tag.ToString() == "6") ImagePath = text.Text;
+                        }
+                    }
+                    if (Name != "" && ShortDescription != "" && Description != "" && Appearance != "" && Habitat != "" /*&& ImagePath != ""*/)
+                    {
+                        foreach (var item in grid.Children)
+                        {
+                            if (item is TextBox textBox)
+                            {
+                                textBox.IsReadOnly = false;
+                                textBox.Background = (Brush)new BrushConverter().ConvertFrom("#FF4FB7BA");
+                            }
+
+                            if (item is Button butt)
+                            {
+                                butt.Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/126/126794.png")), MaxHeight = 50, Stretch = Stretch.Uniform };
+                                butt.Click -= SaveChangeAnimal;
+                                butt.Click += ButtonClickChangeAnimal;
+                            }
+                        }
+
+                        PageNumber = 2;
+                        await _repositoryAnimal.Change(new Domain.Animal()
+                        {
+                            Id = Convert.ToInt32((grid.Parent as Border).Tag),
+                            Name = Name,
+                            ShortDescription = ShortDescription,
+                            Description = Description,
+                            Appearance = Appearance,
+                            Habitat = Habitat
+
+                            // ImagePath = ImagePath,
+                            //TypeOfAnimalId = TypeOfAnimalId
+                        });
+                        await GetPage((grid.Parent as Border).Parent as WrapPanel, 0);
+                    }
+                }
+            }
+        }
+#endregion
+
         private async void MouseDownBorder(object sender, MouseButtonEventArgs e)
         {
-
             var res = sender as Border;
             var ress = res.Parent as WrapPanel;
 
