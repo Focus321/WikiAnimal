@@ -14,20 +14,30 @@ namespace WikiAnimal.Domain.Repository
 {
     public class TypeOfAnimalRepository : IRepository<TypeOfAnimal>
     {
-        public TypeOfAnimalRepository(AnimalDatabaseContext context)
-        {
-            Context = context;
-        }
-
         private AnimalDatabaseContext Context { get; }
+        public TypeOfAnimalRepository(AnimalDatabaseContext context) { Context = context; }
+
+        public async Task Add(TypeOfAnimal obj)
+        {
+            await Context.TypeOfAnimals.AddAsync(obj);
+            await Context.SaveChangesAsync();
+        }
+        public async Task Change(TypeOfAnimal obj)
+        {
+            var typeAnimal = (await Context.TypeOfAnimals.FirstOrDefaultAsync(x => x.Id == obj.Id));
+            if (typeAnimal != null)
+            {
+                typeAnimal.Name = typeAnimal.Name;
+                typeAnimal.PhotoPath = typeAnimal.PhotoPath;
+                await Context.SaveChangesAsync();
+            }
+        }
 
         public async Task<IReadOnlyCollection<TypeOfAnimal>> GetAllAsync()
         {
             return await Context.TypeOfAnimals.Include(x => x.Animals).ToListAsync();
         }
-
-        public async Task<IReadOnlyCollection<TypeOfAnimal>> FindByConditionAsync(
-            Expression<Func<TypeOfAnimal, bool>> predicat)
+        public async Task<IReadOnlyCollection<TypeOfAnimal>> FindByConditionAsync(Expression<Func<TypeOfAnimal, bool>> predicat)
         {
             return await Context.TypeOfAnimals.Include(x => x.Animals).Where(predicat).ToListAsync();
         }
