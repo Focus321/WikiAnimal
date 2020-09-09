@@ -41,5 +41,13 @@ namespace WikiAnimal.Domain.Repository
         {
             return await Context.TypeOfAnimals.Include(x => x.Animals).Where(predicat).ToListAsync();
         }
+
+        public async Task Remove(TypeOfAnimal obj)
+        {
+            if(await Context.TypeOfAnimals.FirstOrDefaultAsync(x => x.Id == obj.Id) is TypeOfAnimal typeOfAnimal )
+                typeOfAnimal.IsRemove = true;
+
+            await Context.SaveChangesAsync();
+        }
     }
 }

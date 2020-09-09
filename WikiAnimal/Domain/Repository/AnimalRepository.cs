@@ -39,11 +39,21 @@ namespace WikiAnimal.Domain.Repository
 
         public async Task<IReadOnlyCollection<Animal>> FindByConditionAsync(Expression<Func<Animal, bool>> predicat)
         {
-            return await Context.Animals.Include(x => x.TypeOfAnimal).Where(predicat).ToListAsync();
+            return await Context.Animals.Include(x => x.TypeOfAnimal).Where(predicat).Where(x => x.IsRemove == false).ToListAsync();
         }
         public async Task<IReadOnlyCollection<Animal>> GetAllAsync()
         {
-            return await Context.Animals.Include(x => x.TypeOfAnimal).ToListAsync();
+            return await Context.Animals.Include(x => x.TypeOfAnimal).Where(x=>x.IsRemove == false).ToListAsync();
+        }
+
+        public async Task Remove(Animal obj)
+        {
+            // await Task.Run(()=> Context.Remove(Context.Animals.First(x => x.Id == obj.Id)));
+
+            if(await Context.Animals.FirstAsync(x => x.Id == obj.Id) is Animal animal)
+           animal.IsRemove = true;
+
+            await Context.SaveChangesAsync();
         }
     }
 }

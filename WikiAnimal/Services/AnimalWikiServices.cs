@@ -618,7 +618,6 @@ namespace WikiAnimal.Services
                         Grid.SetRow(textBlock8, 7);
                         Grid.SetColumnSpan(textBlock8, 2);
                         grid.Children.Add(textBlock8);
-
                         Button butt = new Button();
                         butt.Tag = border.Tag;
                         butt.HorizontalAlignment = HorizontalAlignment.Right;
@@ -631,9 +630,32 @@ namespace WikiAnimal.Services
                         Grid.SetColumn(butt, 1);
                         grid.Children.Add(butt);
 
+                        Button button = new Button()
+                        {
+                            Content = new Image() { Source = new BitmapImage(new Uri($"https://image.flaticon.com/icons/png/512/61/61848.png")), MaxHeight = 50, Stretch = Stretch.Uniform }
+                        };
+                        button.Click += RemoveButtonClick;
+                        button.Tag = border.Tag;
+                        //button.Width = 100;
+                        //button.Height = 30;
+                        button.Background = Brushes.Transparent;
+                        button.BorderBrush = Brushes.Transparent;
+                        button.HorizontalAlignment = HorizontalAlignment.Right;
+                        button.VerticalAlignment = VerticalAlignment.Top;
+                        button.Margin = new Thickness(-5, -5, 70, -5);
+                        Grid.SetColumn(button, 1);
+                        grid.Children.Add(button);
                     }
                 }
             }
+        }
+
+        private async void RemoveButtonClick(object sender, RoutedEventArgs e)
+        {
+            await _repositoryAnimal.Remove((await _repositoryAnimal.GetAllAsync()).First(x => x.Id == Convert.ToInt32((sender as Button).Tag.ToString())));
+
+            PageNumber--;
+            await GetPage((((sender as Button).Parent as Grid).Parent as Border).Parent as WrapPanel, 0);
         }
 
         private void ButtonClickChangeAnimal(object sender, RoutedEventArgs e)
@@ -720,11 +742,10 @@ namespace WikiAnimal.Services
                 }
             }
         }
-        #endregion
+#endregion
 
         private async void MouseDownBorder(object sender, MouseButtonEventArgs e)
         {
-
             var res = sender as Border;
             var ress = res.Parent as WrapPanel;
 
