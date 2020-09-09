@@ -44,8 +44,8 @@ namespace Server
                     {
                         try
                         {
-                            message = GetMessage().Message;
-                            message = String.Format("{0}: {1}", userName, message);
+                            command = GetMessage();
+                            message = String.Format("{0}: {1}", command.Nickname, command.Message);
                             Console.WriteLine(message);
                             server.BroadcastMessage(command, this.Id);
                         }
